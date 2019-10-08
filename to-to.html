@@ -21,10 +21,22 @@
 
     <script>
     
+    // set up
+
     const form = document.querySelector('form');
     const todoList = document.querySelector('ul');
     const button = document.querySelector('button');
     const input = document.getElementById('user-todo');
+
+    // next step
+
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
+        todoMaker(input.value);
+        input.value = ''; //so that any input does't just stay in the input box
+    })
+
+
     
     </script>
 </body>
