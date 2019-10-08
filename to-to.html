@@ -9,7 +9,7 @@
 <body>
     <h1 id="title">To-do list</h1>
     <form>
-        <input type="text" id='user-todo' placeholder="new to-do">
+        <input type="text" id='user-todo' placeholder="new to-do" required>
     </form> 
     <h3 id='header'>To-do</h3>
 
@@ -18,5 +18,14 @@
     </ul>
 
     <button id='clear'>Clear all</button>
+
+    <script>
+    
+    const form = document.querySelector('form');
+    const todoList = document.querySelector('ul');
+    const button = document.querySelector('button');
+    const input = document.getElementById('user-todo');
+    
+    </script>
 </body>
 </html>
