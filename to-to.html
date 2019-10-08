@@ -28,7 +28,7 @@
     const button = document.querySelector('button');
     const input = document.getElementById('user-todo');
 
-    // next step
+    //  step two
 
     form.addEventListener('submit', function(event){
         event.preventDefault();
@@ -36,6 +36,15 @@
         input.value = ''; //so that any input does't just stay in the input box
     })
 
+    // step three
+
+    const todoMaker = function(text){
+        const todo = document.createElement('li')
+        todo.textContent = text;
+        todoList.appendChild(todo)
+    }
+
+    // step four
 
     
     </script>
