@@ -46,6 +46,11 @@
 
     // step four
 
+    button.addEventListener('click', function(){
+        while(todoList.firstChild){
+            todoList.removeChild(todoList.firstChild)
+        }
+    })
     
     </script>
 </body>
