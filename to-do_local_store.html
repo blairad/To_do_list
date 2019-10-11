@@ -27,15 +27,22 @@
     const input = document.getElementById('user-todo');
 
     // const todoArray = [];
+    // json.stringify is used as local storage works with strings and this is how we send data to localstorage
+    // we have an
     const todoArray = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : [];
     localStorage.setItem('todos', JSON.stringify(todoArray));
 
+
+    //storage contains all the information in local storage. we use json.parse which converts the information from local storage into a javascript object which we can use
+    // todos is the key used in localStorage
     const storage = JSON.parse(localStorage.getItem('todos'));    
 
     form.addEventListener('submit', function(event){
         event.preventDefault();
-
+// this puts the input into the array 
         todoArray.push(input.value)
+//we want to put it in a specific places in local storage so we set that with the setItem method
+//second argument is to set todos to our todoArray that has been updated with the input value we just pushed to the end of the array
         localStorage.setItem('todos', JSON.stringify(todoArray))
         todoMaker(input.value);
         input.value = ''; //so that any input does't just stay in the input box
