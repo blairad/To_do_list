@@ -28,19 +28,11 @@
     const button = document.querySelector('button');
     const input = document.getElementById('user-todo');
 
-    // const todoArray = [];
-    const todoArray = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : [];
-    localStorage.setItem('todos', JSON.stringify(todoArray));
-
-    const storage = JSON.parse(localStorage.getItem('todos'))
 
     //  step two
 
     form.addEventListener('submit', function(event){
         event.preventDefault();
-
-        todoArray.push(input.value)
-        localStorage.setItem('todos', JSON.stringify(todoArray))
         todoMaker(input.value);
         input.value = ''; //so that any input does't just stay in the input box
 
