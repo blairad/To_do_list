@@ -29,6 +29,8 @@
     // const todoArray = [];
     // json.stringify is used as local storage works with strings and this is how we send data to localstorage
     // we have an
+    // localStorage.getIten('todos") is now our conditional. if there is a key in local storage called 'todos' then this is true. if not false. the ? is what we do if true which is set it to the JSON... so when we refresh the page our todosArray will immediately be set to the todos in local storage
+    //if false we use the colon to instruct what to do which here is an empty array
     const todoArray = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : [];
     localStorage.setItem('todos', JSON.stringify(todoArray));
 
@@ -57,11 +59,16 @@
     }
 
     // loop through localStorage when a user first opens a page and run the todoMaker function
+    //we set the counter at 0 so as to begin at start and set next as storage.length. if there is anything in it it will now loop through it
     for (var i = 0; i < storage.length; i++) {
+    // we want to call the todoMaker function on the storage array at position [i]
+    // the todoMaker will create a list item using the text.content property to whatever storage at location i is
+    //it will append to the todoList variable that is targetting the ul
       todoMaker(storage[i]);
     }
 
     button.addEventListener('click', function(){
+        // this will mean that items are permenantly cleared now
         localStorage.clear();
         while(todoList.firstChild){
             todoList.removeChild(todoList.firstChild)
