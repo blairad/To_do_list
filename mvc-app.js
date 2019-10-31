@@ -8,7 +8,7 @@ class Model{
     }
     addTodo(todoText){
         const todo = {
-            id: this.todo.length > 0 ? this.todo[this.todos.length - 1].id + 1 : 1,
+            id: this.todos.length > 0 ? this.todos[this.todos.length - 1].id + 1 : 1,
             text: todoText,
             complete: false,
         }
@@ -56,15 +56,57 @@ class View{
         this.form.append(this.input, this.submitButton)
 // Append the title, form, and todo list to the app
         this.app.append(this.title, this.form, this.todoList)
-
+    }
     get _todoText(){
         return this.input.value
     }
     _resetInput(){
         this.input.value = '';
     }
-    }
+    displayTodos(todos){
+// Delete all nodes
+        while (this.todoList.firstChild){
+            this.todoList.removeChild(this.todoList.firstChild)
+        }
+// Show default message
+        if (todos.length === 0) {
+            const p = this.createElement('p')
+            p.textContent = "nout to do, add a task?"
+            this.todoList.append(p)
+        } else {
+// Create todo item nodes for each todo in state
+    todos.forEach(todo => {
+        const li = this.createElement('li')
+        li.id = todo.id
+// Each todo item will have a checkbox you can toggle
+        const checkbox = this.createElement('input')
+        checkbox.type = 'checkbox'
+        checkbox.checked = todo.complete
 
+// The todo item text will be in a contenteditable span
+        const span = this.createElement('span')
+        span.contentEditable = true
+        span.classList.add('editable')
+
+// If the todo is complete, it will have a strikethrough
+        if(todo.complete) {
+            const strike = this.createElement('s')
+            strike.textContent = todo.text
+            span.append(strike)
+        } else {
+// Otherwise just display the text
+            span.textContent = todo.text
+        }
+// The todos will also have a delete button
+        const deleteButton = this.createElement('button','delete')
+        deleteButton.textContent = 'Delete'
+        li.append(checkbox, span, deleteButton)
+
+// Append nodes to the todo list
+        this.todoList.append(li) 
+        })
+    }
+}
 // Create an element with an optional CSS class
 
     createElement(tag, className){
@@ -78,24 +120,17 @@ class View{
         const element = document.querySelector(selector)
 
         return element
-    }
-
 }
-
-
-
-
-
-
-
-
-
-
-
+}
 class Controller{
     constructor(model, view){
         this.model = model;
         this.view = view;
+        // Display initial todos
+        this.onTodoListChanged(this.model.todos)
+}
+    onTodoListChanged = todos => {
+        this.view.displayTodos(todos)
     }
 }
 
