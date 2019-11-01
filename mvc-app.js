@@ -56,6 +56,7 @@ class View{
         this.form.append(this.input, this.submitButton)
 // Append the title, form, and todo list to the app
         this.app.append(this.title, this.form, this.todoList)
+        
     }
     get _todoText(){
         return this.input.value
@@ -122,17 +123,61 @@ class View{
         return element
 }
 }
+        
 class Controller{
     constructor(model, view){
         this.model = model;
         this.view = view;
-        // Display initial todos
-        this.onTodoListChanged(this.model.todos)
+        this.view.bindAddTodo(this.handleAddTodo)
+        this.view.bindDeleteTodo(this.handleDeleteTodo)
+        this.view.bindToggleTodo(this.handleToggleTodo)
+        // // Display initial todos
+        // this.onTodoListChanged(this.model.todos)
 }
     onTodoListChanged = todos => {
         this.view.displayTodos(todos)
     }
+
+    handdleAddTodo = todoText => {
+        this.model.addTodo(todoText)
+    }
+    handdleEditTodo = (id, todoText) =>{
+        todo.model.editTodo(id, todoText)
+    }
+    handleDeleteTodo = id => {
+        this.model.deleteTodo(id)
+    }
+    handdleToggleTodo = id => {
+        this.model.toggleTodo(id)
+    }
+    bindAddtodo(handler) {
+        this.form.addEventListener('submit', event => {
+            event.preventDefault()
+            if(this._todoText){
+                handler(this._todoText)
+                this._resetInput()
+            }
+        })
+    }
+    binfDeleteTodo(handler){
+        this.todoList.addEventListener('click', event => {
+            if(event.target.className === 'delete'){
+                const id = parseInt(event.target.parentElement.id)
+                handler(id)
+            }
+        })
+    }
+    bindToggleTodo(handler){
+        this.todoList.addEventListener('change', event =>{
+            if(event.target.type === 'checkbox'){
+                const id = parseInt(event.target.parentElement.id)
+                handler(id)
+            }
+        })
+        
+    }
 }
+
 
 const app = new Controller(new Model(), new View())
 //The app will be an instance of the controller.
